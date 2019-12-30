@@ -6,16 +6,26 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cordova android build && adb install ./platforms/android/app/build/outputs/apk/debug/app-debug.apk"
+    "start": "parcel src/main.ts -d ./www",
+    "publish": "parcel build src/main.ts -d ./www --public-url ./ && cordova build android",
+    "build": "parcel build src/main.ts -d ./www && cordova build android",
+    "lint": "tsc --noEmit",
+    "emulate": "cordova emulate android",
+    "deviceinstall": "adb install ./platforms/android/app/build/outputs/apk/debug/app-debug.apk"
   },
   "keywords": [
-    "ecosystem:cordova"
+    "ecosystem:cordova" 
   ],
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
     "cordova-android": "^8.1.0",
-    "cordova-browser": "^6.0.0"
+    "cordova-browser": "^6.0.0",
+    "dungeon-factory": "^1.0.6",
+    "mrpas": "^1.2.1",
+    "parcel": "^1.9.7",
+    "phaser": "^3.21.0",
+    "typescript": "^3.0.3"
   },
   "devDependencies": {
     "cordova-plugin-whitelist": "^1.3.4"

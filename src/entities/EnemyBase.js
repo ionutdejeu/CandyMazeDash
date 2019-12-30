@@ -1,0 +1,32 @@
+import Graphics from "../assets/Graphics";
+import EnemyBehaviour from "./EnemyBehaviour";
+
+export default class EnemyBase {
+    sprite=null;
+    emitter=null;
+    body=null;
+
+    constructor(x, y, scene,player){
+
+        this.sprite = scene.physics.add.sprite(x, y, Graphics.slime.name, 0);
+        this.sprite.setSize(8, 8);
+        this.sprite.setOffset(12, 20);
+        
+        this.sprite.anims.play(Graphics.player.animations.idle.name);
+        const particles = scene.add.particles(Graphics.slime.name);
+        this.emitter = particles.createEmitter({
+            alpha: { start: 0.7, end: 0, ease: "Cubic.easeOut" },
+            follow: this.sprite,
+            quantity: 1,
+            lifespan: 200,
+            blendMode: Phaser.BlendModes.ADD,
+            scaleX: () => (this.sprite.flipX ? -1 : 1),
+            emitCallback: (particle) => {
+                particle.frame = this.sprite.frame;
+            }
+        });
+        this.emitter.stop();
+
+        this.body =this.sprite.body;
+    }
+}
