@@ -127,5 +127,25 @@ export default {
     indices: {
       black: 0x00
     }
+  },
+  ui:{
+    joystick:{
+      up:{
+        name:"up_joystickpad",
+        file:'assets/images/transparentLight01.png'
+      },
+      left:{
+        name:'left_joystickpad',
+        file:'assets/images/transparentLight01.png'
+      },
+      down:{
+        name:'down_joystickpad',
+        file:'assets/images/transparentLight08.png'
+      },
+      right:{
+        name:'left_joystickpad',
+        file:'assets/images/transparentLight01.png'
+      }
+    }
   }
 };
