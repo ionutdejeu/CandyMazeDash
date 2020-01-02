@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import Graphics from "../assets/Graphics";
-import { VirtualJoystickKeys } from "../scenes/JoyStickScene";
+import { VirtualJoystickKeys } from "../scenes/UILayerScene";
 
 const speed = 125;
 const attackSpeed = 500;

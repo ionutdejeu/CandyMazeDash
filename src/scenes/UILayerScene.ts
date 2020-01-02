@@ -1,9 +1,4 @@
 import Phaser, { GameObjects } from "phaser";
-import transparentLight01 from "../../assets/ui/transparentLight/transparentLight01.png";
-import transparentLight03 from "../../assets/ui/transparentLight/transparentLight03.png";
-import transparentLight04 from "../../assets/ui/transparentLight/transparentLight04.png";
-import transparentLight08 from "../../assets/ui/transparentLight/transparentLight08.png";
-import transparentLight34 from "../../assets/ui/transparentLight/transparentLight34.png";
 import Graphics from "../assets/Graphics";
  
 export interface VirtualJoystickKeys{
@@ -13,7 +8,7 @@ export interface VirtualJoystickKeys{
     right:boolean;
     actionButtonA:boolean;
 }
-export default class JoyStickScene extends Phaser.Scene{
+export default class UILayerScene extends Phaser.Scene{
     clickCountText:any|null;
     text:any;
     up_pressed:boolean=false;
@@ -21,9 +16,12 @@ export default class JoyStickScene extends Phaser.Scene{
     right_pressed:boolean=false;
     down_pressed:boolean=false;
     actionButtonA:boolean=false;
-     
+    joystickContainer:GameObjects.Container;
+    actionButtonsContainer:GameObjects.Container;
+
     constructor(){
-        super({key:'JoyStickTestScene'});
+        super({key:'UILayer'});
+        
         
     }
     
@@ -53,9 +51,11 @@ export default class JoyStickScene extends Phaser.Scene{
             this.scene.start("DungeonScene");
         });
        
-        let container = this.add.container(200,200);
-        container.setScrollFactor(0,0);
-        container.setDepth(-999);
+        let posY = this.game.scale.height-100;
+        this.joystickContainer = this.add.container(150,posY);
+
+        this.joystickContainer.setScrollFactor(0,0);
+        this.joystickContainer.setDepth(-999);
         const upPadButton = this.add.image(-40,-76,Graphics.ui_joystick_up.name)
         
         upPadButton.setInteractive()
@@ -84,11 +84,11 @@ export default class JoyStickScene extends Phaser.Scene{
         .on('pointerover', (e) => {console.log(e)} )
         .on('pointerout', (e) => {this.down_pressed = false; } );
 
-        container.add([upPadButton,downPadButton,leftPadButton,rightPadButton]);
-
-        let actionsButtonsContainer = this.add.container(400,200);
-        actionsButtonsContainer.setScrollFactor(0,0);
-        actionsButtonsContainer.setDepth(-999);
+        this.joystickContainer.add([upPadButton,downPadButton,leftPadButton,rightPadButton]);
+    
+        this.actionButtonsContainer = this.add.container(400,200);
+        this.actionButtonsContainer.setScrollFactor(0,0);
+        this.actionButtonsContainer.setDepth(-999);
 
        
         const jumpButton = this.add.image(0,0,Graphics.ui_actionButtons_A.name)
@@ -98,10 +98,24 @@ export default class JoyStickScene extends Phaser.Scene{
         .on('pointerover', (e) => {console.log(e)} )
         .on('pointerout', (e) => {this.actionButtonA = false; } );
 
-        actionsButtonsContainer.add([jumpButton]);
-
+        this.actionButtonsContainer.add([jumpButton]);
+        
+        
+        
     }
 
+    public onCanvasResizeEvent(gameSize, baseSize, displaySize, resolution, previousWidth, previousHeight){
+        console.log('resized window',this.joystickContainer,this.actionButtonsContainer);
+        if(this.joystickContainer!== undefined){
+            this.joystickContainer.setPosition(150,gameSize.height-150);
+        }
+        if(this.actionButtonsContainer !==undefined){
+            this.actionButtonsContainer.setPosition(gameSize.width-100,gameSize.height-100);
+        }
+    }
+    public repositionUiContainers(gameSize){
+        
+    }
     public getCursorKeys():any
     {
         return {

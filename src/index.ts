@@ -1,8 +1,8 @@
-import Phaser from "phaser";
+import Phaser, { Scene } from "phaser";
 import InfoScene from "./scenes/InfoScene";
 import ReferenceScene from "./scenes/ReferenceScene";
 import DungeonScene from "./scenes/DungeonScene";
-import JoyStickScene from "./scenes/JoyStickScene";
+import UILayerScene from "./scenes/UILayerScene";
  
 export function initialize() {
     document.addEventListener('deviceready', onDeviceReady, false);
@@ -19,14 +19,23 @@ function onDeviceReady() {
       // TODO: OnResize
       width: window.innerWidth,
       height: window.innerHeight,
+      // scale: {
+      //   mode: Phaser.Scale.FIT,
+      //   autoCenter: Phaser.Scale.CENTER_BOTH
+      // },
       render: { pixelArt: true },
       physics: { default: "arcade", arcade: { debug: false, gravity: { y: 0 } } },
-      scene: [DungeonScene,JoyStickScene,  InfoScene, ReferenceScene]
+      scene: [DungeonScene,UILayerScene,  InfoScene, ReferenceScene]
     });
+
+    console.log(game.scene.getScenes());
+    let uiLayerScene = game.scene.getScene('UILayer')  as UILayerScene;
+    // game.scale.on('resize',uiLayerScene.onCanvasResizeEvent);
     
     setUpHotReload();
     window.addEventListener("resize", () => {
-      //game.resize(window.innerWidth, window.innerHeight);
+      game.scale.resize(window.innerWidth, window.innerHeight);
+      game.scale.refresh();
     });
 } 
  
