@@ -4,7 +4,7 @@ import FOVLayer from "../entities/FOVLayer";
 import Player from "../entities/Player";
 import Map from "../entities/Map";
 
-import JoyStickScene, { VirtualJoystickKeys } from "./JoyStickScene";
+import JoyStickScene, { VirtualJoystickKeys } from "./UILayerScene";
 import ArcadePickupObject from "../entities/ArcadePickupObject";
 
 const worldTileHeight = 81;
@@ -92,12 +92,12 @@ export default class DungeonScene extends Phaser.Scene {
     });
     this.input.keyboard.on("keydown_J",()=>{
       this.scene.stop("InfoScene");
-      this.scene.start("JoyStickTestScene");
+      this.scene.start("UILayer");
     });
 
     this.scene.run("InfoScene");
-    this.scene.run("JoyStickTestScene");
-    this.joyStickScene= this.scene.manager.getScene('JoyStickTestScene') as JoyStickScene;
+    this.scene.run("UILayer");
+    this.joyStickScene= this.scene.manager.getScene('UILayer') as JoyStickScene;
     
     const item = new ArcadePickupObject(
       this.tilemap.tileToWorldX(map.startingX),

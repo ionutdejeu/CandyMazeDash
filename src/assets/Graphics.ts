@@ -29,6 +29,9 @@ export default {
           n: 0x32,
           n_w: 0x33
         }
+      },
+      coin:{
+        
       }
     }
   },
@@ -119,6 +122,7 @@ export default {
     height: 16,
     file: 'assets/images/rogue-items.png'
   },
+   
 
   util: {
     name: "util",
